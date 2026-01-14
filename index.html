@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StiloSillas | Atelier de Diseño</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --dark: #121212;
+            --light: #ffffff;
+            --gray: #f8f8f8;
+            --text-muted: #666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: var(--light); 
+            color: var(--dark); 
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 400; }
+
+        /* HEADER & NAVEGACIÓN */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255,255,255,0.95); padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        
+        .logo { 
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 6px; 
+            text-transform: uppercase; color: var(--dark);
+        }
+
+        .cart-trigger {
+            display: flex; align-items: center; cursor: pointer;
+            text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px;
+        }
+        
+        .cart-badge {
+            margin-left: 10px; background: var(--dark); color: white;
+            width: 25px; height: 25px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 80vh; margin-top: 0;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: white;
+        }
+
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 10px; font-style: italic; }
+        .hero p { font-size: 0.9rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 200; }
+
+        /* INTRO */
+        .intro { padding: 100px 10%; text-align: center; }
+        .intro h2 { font-size: 2.5rem; margin-bottom: 20px; color: var(--dark); }
+        .intro p { max-width: 600px; margin: 0 auto; color: var(--text-muted); line-height: 1.8; }
+
+        /* GALERIA DE PRODUCTOS */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+            gap: 2px; /* Espacio mínimo para look moderno */
+            padding: 0 2px; 
+        }
+
+        .card { 
+            position: relative; overflow: hidden; background: #000;
+            aspect-ratio: 4/5;
+        }
+
+        .card img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: transform 1.2s ease; opacity: 0.85;
+        }
+
+        .card:hover img { transform: scale(1.08); opacity: 0.6; }
+
+        .card-overlay {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; color: white;
+            opacity: 0; transition: 0.5s; padding: 20px; text-align: center;
+        }
+
+        .card:hover .card-overlay { opacity: 1; }
+
+        .card-overlay h3 { font-size: 1.8rem; margin-bottom: 10px; }
+        .card-overlay span { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+
+        .btn-add {
+            padding: 12px 25px; border: 1px solid white; background: transparent;
+            color: white; cursor: pointer; font-size: 0.7rem; letter-spacing: 2px;
+            text-transform: uppercase; transition: 0.3s;
+        }
+
+        .btn-add:hover { background: white; color: black; }
+
+        /* SIDEBAR DE COTIZACIÓN */
+        .sidebar {
+            position: fixed; right: -100%; top: 0; width: 450px; height: 100vh;
+            background: var(--light); z-index: 2000; transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 60px; display: flex; flex-direction: column;
+            box-shadow: -20px 0 50px rgba(0,0,0,0.05);
+        }
+        .sidebar.active { right: 0; }
+        .sidebar-header { border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 30px; }
+        .items-list { flex: 1; overflow-y: auto; }
+        
+        .list-item { 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 0; border-bottom: 1px solid #f9f9f9;
+        }
+
+        .whatsapp-btn {
+            background: var(--dark); color: white; border: none; padding: 20px;
+            width: 100%; letter-spacing: 3px; font-weight: 600; cursor: pointer;
+            margin-top: 20px; font-size: 0.8rem;
+        }
+
+        /* FOOTER */
+        footer { background: var(--gray); padding: 100px 10% 50px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 50px; }
+        .footer-brand h4 { font-size: 2rem; margin-bottom: 20px; }
+        .footer-contact h5 { text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-size: 0.8rem; }
+        .footer-contact p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px; }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">StiloSillas</div>
+        <div class="cart-trigger" onclick="toggleSidebar()">
+            Mi Lista <span class="cart-badge" id="badge">0</span>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Artesanía en Hierro</h1>
+        <p>Curaduría de Espejos y Mobiliario</p>
+    </header>
+
+    <section class="intro">
+        <h2>Piezas de Autor</h2>
+        <p>En StiloSillas no fabricamos en serie. Creamos objetos que cuentan historias, ajustando cada medida y acabado a la esencia de tu espacio.</p>
+    </section>
+
+    <main class="grid" id="productGrid"></main>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Mi Selección</h3>
+        </div>
+        <div class="items-list" id="itemsList">
+            </div>
+        <div class="sidebar-footer">
+            <button class="whatsapp-btn" onclick="sendWhatsApp()">SOLICITAR COTIZACIÓN EXCLUSIVA</button>
+            <p onclick="toggleSidebar()" style="text-align:center; margin-top:20px; font-size:0.7rem; cursor:pointer; letter-spacing:2px; color:var(--text-muted);">VOLVER AL CATÁLOGO</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h4>StiloSillas</h4>
+                <p style="color:var(--text-muted); max-width: 400px;">Buscamos la perfección en la simetría y la elegancia del metal. Envíos exclusivos a nivel nacional.</p>
+            </div>
+            <div class="footer-contact">
+                <h5>Contacto Atelier</h5>
+                <p>📍 Showroom Bogotá, Col</p>
+                <p>📱 +57 301 125 3085</p>
+                <p>✉️ hola@stilosillas.com</p>
+            </div>
+        </div>
+        <div style="margin-top:80px; font-size:0.7rem; color:#ccc; letter-spacing:2px; text-align:center;">
+            © 2026 STILOSILLAS - TODOS LOS DERECHOS RESERVADOS.
+        </div>
+    </footer>
+
+    <script>
+        const productos = [
+            { id: 1, nombre: "Espejo Orgánico Amba", cat: "Tendencia 2024", img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800" },
+            { id: 2, nombre: "Silla Minimal Iron", cat: "Acero Negro", img: "https://images.unsplash.com/photo-1503602642458-232111445657?w=800" },
+            { id: 3, nombre: "Espejo Ventana Grand", cat: "Estilo Industrial", img: "https://images.unsplash.com/photo-1618220179428-22790b461013?w=800" },
+            { id: 4, nombre: "Silla Eiffel Luxe", cat: "Edición Especial", img: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800" },
+            { id: 5, nombre: "Espejo Arco Minimal", cat: "Atelier Line", img: "https://images.unsplash.com/photo-1594041381057-0749a9415668?w=800" },
+            { id: 6, nombre: "Taburete High Iron", cat: "Bar Design", img: "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=800" }
+        ];
+
+        let lista = [];
+
+        function render() {
+            document.getElementById('productGrid').innerHTML = productos.map(p => `
+                <div class="card">
+                    <img src="${p.img}">
+                    <div class="card-overlay">
+                        <span>${p.cat}</span>
+                        <h3>${p.nombre}</h3>
+                        <button class="btn-add" onclick="addItem(${p.id})">Añadir a consulta</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addItem(id) {
+            const p = productos.find(x => x.id == id);
+            if(!lista.find(x => x.id == id)) {
+                lista.push(p);
+                updateUI();
+            }
+            toggleSidebar(true);
+        }
+
+        function updateUI() {
+            document.getElementById('badge').textContent = lista.length;
+            document.getElementById('itemsList').innerHTML = lista.map(item => `
+                <div class="list-item">
+                    <div>
+                        <p style="font-size:0.9rem; font-weight:600;">${item.nombre}</p>
+                        <p style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase;">Personalizable</p>
+                    </div>
+                    <span onclick="removeItem(${item.id})" style="cursor:pointer; color:red; font-size:0.7rem;">ELIMINAR</span>
+                </div>
+            `).join('');
+        }
+
+        function removeItem(id) {
+            lista = lista.filter(x => x.id != id);
+            updateUI();
+        }
+
+        function toggleSidebar(forceOpen = false) {
+            const sb = document.getElementById('sidebar');
+            if(forceOpen) sb.classList.add('active');
+            else sb.classList.toggle('active');
+        }
+
+        function sendWhatsApp() {
+            if (lista.length === 0) return;
+            let msg = "¡Hola StiloSillas! ⚜️\n\nMe gustaría solicitar una cotización personalizada para los siguientes diseños de su catálogo:\n\n";
+            lista.forEach(x => msg += `• ${x.nombre} (${x.cat})\n`);
+            msg += "\nQuedo a la espera de sus indicaciones para coordinar medidas y disponibilidad. Muchas gracias.";
+            
+            window.open(`https://wa.me/573011253085?text=${encodeURIComponent(msg)}`, '_blank');
+            lista = [];
+            updateUI();
+            toggleSidebar();
+        }
+
+        render();
+    </script>
+</body>
+</html>
